@@ -100,25 +100,30 @@
 
 
 
-  <meta name="description" content="线性变换如果有一个函数 $f(v)$ 有且具有  $f(v) = f(x,y,z) = (x’,y’,z’)$  且  $f(v+u) = f(v) + f(u)$$f(kv) = kf(v)$  则称 $f(v)$ 为线性变换. 比方说存在某个函数 $f(x,y,z)$ = $(x^2,y^2,z^2)$ 显然有 $f(kv)$ = ${k^2}f(v)$ 则 $f(x,y,z)$ 不是线性变换">
-<meta name="keywords" content="阅读笔记">
+  <meta name="description" content="采坑点  生成DLL项目后 点击项目-&amp;gt;显示所有文件。以构造项目结构。 测试在当前解决方案可新建一个空的测试项目。 在新项目的属性中,配置vc++目录.一般情况而言,dll项目生成的文件在Debug/Release文件夹下.为了今后的方便，也可以直接设置输出目录为指定文件夹。 安装配置  将输出目录改为自己指定的文件夹后。我们需要将头文件一起拷贝进这个文件夹。首先在这个文件夹下先新建一个in">
+<meta name="keywords" content="环境配置">
 <meta property="og:type" content="article">
-<meta property="og:title" content="游戏中的数学(1)">
-<meta property="og:url" content="https://taoria.github.io/2019/02/14/waiting/index.html">
+<meta property="og:title" content="记 Visual Studio Windows动态链接库开发环境配置">
+<meta property="og:url" content="https://taoria.github.io/2019/02/19/vs/index.html">
 <meta property="og:site_name" content="只是另一个博客">
-<meta property="og:description" content="线性变换如果有一个函数 $f(v)$ 有且具有  $f(v) = f(x,y,z) = (x’,y’,z’)$  且  $f(v+u) = f(v) + f(u)$$f(kv) = kf(v)$  则称 $f(v)$ 为线性变换. 比方说存在某个函数 $f(x,y,z)$ = $(x^2,y^2,z^2)$ 显然有 $f(kv)$ = ${k^2}f(v)$ 则 $f(x,y,z)$ 不是线性变换">
+<meta property="og:description" content="采坑点  生成DLL项目后 点击项目-&amp;gt;显示所有文件。以构造项目结构。 测试在当前解决方案可新建一个空的测试项目。 在新项目的属性中,配置vc++目录.一般情况而言,dll项目生成的文件在Debug/Release文件夹下.为了今后的方便，也可以直接设置输出目录为指定文件夹。 安装配置  将输出目录改为自己指定的文件夹后。我们需要将头文件一起拷贝进这个文件夹。首先在这个文件夹下先新建一个in">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-17T18:53:34.609Z">
+<meta property="og:image" content="https://taoria.github.io/2019/02/19/vs/00.png">
+<meta property="og:image" content="https://taoria.github.io/2019/02/19/vs/01.png">
+<meta property="og:image" content="https://taoria.github.io/2019/02/19/vs/02.png">
+<meta property="og:image" content="https://taoria.github.io/2019/02/19/vs/03.png">
+<meta property="og:updated_time" content="2019-02-18T20:33:00.833Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="游戏中的数学(1)">
-<meta name="twitter:description" content="线性变换如果有一个函数 $f(v)$ 有且具有  $f(v) = f(x,y,z) = (x’,y’,z’)$  且  $f(v+u) = f(v) + f(u)$$f(kv) = kf(v)$  则称 $f(v)$ 为线性变换. 比方说存在某个函数 $f(x,y,z)$ = $(x^2,y^2,z^2)$ 显然有 $f(kv)$ = ${k^2}f(v)$ 则 $f(x,y,z)$ 不是线性变换">
+<meta name="twitter:title" content="记 Visual Studio Windows动态链接库开发环境配置">
+<meta name="twitter:description" content="采坑点  生成DLL项目后 点击项目-&amp;gt;显示所有文件。以构造项目结构。 测试在当前解决方案可新建一个空的测试项目。 在新项目的属性中,配置vc++目录.一般情况而言,dll项目生成的文件在Debug/Release文件夹下.为了今后的方便，也可以直接设置输出目录为指定文件夹。 安装配置  将输出目录改为自己指定的文件夹后。我们需要将头文件一起拷贝进这个文件夹。首先在这个文件夹下先新建一个in">
+<meta name="twitter:image" content="https://taoria.github.io/2019/02/19/vs/00.png">
 
 
 
 
 
 
-  <link rel="canonical" href="https://taoria.github.io/2019/02/14/waiting/">
+  <link rel="canonical" href="https://taoria.github.io/2019/02/19/vs/">
 
 
 
@@ -128,7 +133,7 @@
   };
 </script>
 
-  <title>游戏中的数学(1) | 只是另一个博客</title>
+  <title>记 Visual Studio Windows动态链接库开发环境配置 | 只是另一个博客</title>
   
 
 
@@ -344,7 +349,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/02/14/waiting/">
+    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/02/19/vs/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="taoria">
@@ -361,7 +366,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">游戏中的数学(1)
+          <h1 class="post-title" itemprop="name headline">记 Visual Studio Windows动态链接库开发环境配置
 
               
             
@@ -387,24 +392,12 @@
                 
               
 
-              <time title="创建时间：2019-02-14 23:53:26" itemprop="dateCreated datePublished" datetime="2019-02-14T23:53:26+08:00">2019-02-14</time>
+              <time title="创建时间：2019-02-19 03:47:25 / 修改时间：04:33:00" itemprop="dateCreated datePublished" datetime="2019-02-19T03:47:25+08:00">2019-02-19</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-02-18 02:53:34" itemprop="dateModified" datetime="2019-02-18T02:53:34+08:00">2019-02-18</time>
               
             
           </span>
@@ -421,7 +414,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/图形学/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
 
                 
                 
@@ -456,27 +449,25 @@
       
 
       
-        <h1 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h1><p>如果有一个函数 $f(v)$ 有且具有</p>
-<blockquote>
-<p>$f(v) = f(x,y,z) = (x’,y’,z’)$</p>
-</blockquote>
-<p>且</p>
-<blockquote>
-<p>$f(v+u) = f(v) + f(u)$<br>$f(kv) = kf(v)$</p>
-</blockquote>
-<p>则称 $f(v)$ 为线性变换.</p>
-<p>比方说存在某个函数 $f(x,y,z)$ = $(x^2,y^2,z^2)$ 显然有 $f(kv)$ = ${k^2}f(v)$ 则 $f(x,y,z)$ 不是线性变换</p>
-<p>对于一个三维向量$v$,我们可以将它表示为$v=xi+yj+zk$ , 其中$i,j,k$是三个基向量.</p>
-<p>如果$f(v)$ 是一种线性变换,根据其性质,我们能得到$f(v)=f(xi+yj+zk) = xf(i)+yf(j)+zf(k)$</p>
-<p>由此我们可以将其矩阵化表示为</p>
-<script type="math/tex; mode=display">f(v) = f(x,y,z) = [x,y,z] \begin{bmatrix}f(i)\\f(j)\\f(k)\end{bmatrix}</script><p>又因为f(v)的结果是一个3维的向量,因此</p>
-<script type="math/tex; mode=display">
-f(v) = f(x,y,z) = [x,y,z] 
-\begin{bmatrix}
-f(i)_x&f(i)_y&f(i)_z\\
-f(j)_x&f(j)_y&f(j)_z\\
-f(k)_x&f(k)_y&f(k)_z\\
-\end{bmatrix}</script><p>这事儿就成了</p>
+        <p>采坑点 </p>
+<p>生成DLL项目后</p>
+<p>点击项目-&gt;显示所有文件。以构造项目结构。</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>在当前解决方案可新建一个空的测试项目。</p>
+<p>在新项目的属性中,配置vc++目录.一般情况而言,dll项目生成的文件在Debug/Release文件夹下.为了今后的方便，也可以直接设置输出目录为指定文件夹。</p>
+<h2 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h2><p><img src="/2019/02/19/vs/00.png" alt="图片00"></p>
+<p><img src="/2019/02/19/vs/01.png" alt="图片01"></p>
+<p>将输出目录改为自己指定的文件夹后。我们需要将头文件一起拷贝进这个文件夹。首先在这个文件夹下先新建一个include文件夹。用来存放我们的头文件。</p>
+<p>然后是在生成事件中配置拷贝头文件的行为。</p>
+<p><img src="/2019/02/19/vs/02.png" alt="图片02"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcopy  /S /y  $(ProjectDir)*.h $(OutputPath)include</span><br></pre></td></tr></table></figure>
+<p>这样,我们生成项目的时候,头文件就能和库文件一起打包到指定文件夹中.实现了简单的安装.</p>
+<h2 id="测试项目的配置"><a href="#测试项目的配置" class="headerlink" title="测试项目的配置"></a>测试项目的配置</h2><p>新建一个CPP文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> CALLBACK <span class="title">WinMain</span><span class="params">(  </span></span></span><br><span class="line"><span class="function"><span class="params">	HINSTANCE hInstance,  </span></span></span><br><span class="line"><span class="function"><span class="params">	HINSTANCE hPrevInstance,  </span></span></span><br><span class="line"><span class="function"><span class="params">	LPTSTR lpCmdLine,  </span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="keyword">int</span> nCmdShow  </span></span></span><br><span class="line"><span class="function"><span class="params">)</span> </span>&#123;  </span><br><span class="line">     <span class="comment">//test code here</span></span><br><span class="line">	 <span class="keyword">return</span> <span class="number">0</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置好环境和目录,还需要在链接器-&gt;附加依赖项上,添加上库项目的lib文件.这个lib文件会随着DLL的生成一并打包到之前指定的文件夹里。</p>
+<p><img src="/2019/02/19/vs/03.png" alt="图片03"></p>
+<p>也可以在测试的头文件或源文件中添加以下代码来链接所需的库文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">"yourlib.lib"</span>)</span></span><br></pre></td></tr></table></figure>
+<p>这时候,我们启动调试,依然会报找不到DLL的错误,我的处理方法是再通过<em>xcopy</em>命令把DLL文件拷贝到测试项目的输出目录中去。</p>
 
       
     </div>
@@ -500,7 +491,7 @@ f(k)_x&f(k)_y&f(k)_z\\
       
         <div class="post-tags">
           
-            <a href="/tags/阅读笔记/" rel="tag"># 阅读笔记</a>
+            <a href="/tags/环境配置/" rel="tag"># 环境配置</a>
           
         </div>
       
@@ -513,8 +504,8 @@ f(k)_x&f(k)_y&f(k)_z\\
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/19/hello-world-1/" rel="next" title="Ch.1">
-                <i class="fa fa-chevron-left"></i> Ch.1
+              <a href="/2019/02/18/magica/" rel="next" title="神秘学杂谈">
+                <i class="fa fa-chevron-left"></i> 神秘学杂谈
               </a>
             
           </div>
@@ -522,10 +513,6 @@ f(k)_x&f(k)_y&f(k)_z\\
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/18/magica/" rel="prev" title="神秘学杂谈">
-                神秘学杂谈 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -677,7 +664,7 @@ f(k)_x&f(k)_y&f(k)_z\\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性变换"><span class="nav-number">1.</span> <span class="nav-text">线性变换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">1.</span> <span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装配置"><span class="nav-number">1.1.</span> <span class="nav-text">安装配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试项目的配置"><span class="nav-number">1.2.</span> <span class="nav-text">测试项目的配置</span></a></li></ol></li></ol></div>
             
 
           </div>
