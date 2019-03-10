@@ -100,17 +100,17 @@
 
 
 
-  <meta name="description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct 纯虚函数显而易见,纯虚函数的存在会导致该类的类型成为抽象,从而不能实例化.声明一个纯虚函数很简单.1virtual some_type your_function() = 0; 我们可以规定接">
+  <meta name="description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CPP补完计划">
 <meta property="og:url" content="https://taoria.github.io/2019/03/10/fill/index.html">
 <meta property="og:site_name" content="只是另一个博客">
-<meta property="og:description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct 纯虚函数显而易见,纯虚函数的存在会导致该类的类型成为抽象,从而不能实例化.声明一个纯虚函数很简单.1virtual some_type your_function() = 0; 我们可以规定接">
+<meta property="og:description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-10T08:43:08.947Z">
+<meta property="og:updated_time" content="2019-03-10T08:43:35.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CPP补完计划">
-<meta name="twitter:description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct 纯虚函数显而易见,纯虚函数的存在会导致该类的类型成为抽象,从而不能实例化.声明一个纯虚函数很简单.1virtual some_type your_function() = 0; 我们可以规定接">
+<meta name="twitter:description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
 
 
 
@@ -386,7 +386,7 @@
                 
               
 
-              <time title="创建时间：2019-03-10 16:34:30 / 修改时间：16:43:08" itemprop="dateCreated datePublished" datetime="2019-03-10T16:34:30+08:00">2019-03-10</time>
+              <time title="创建时间：2019-03-10 16:34:30 / 修改时间：16:43:35" itemprop="dateCreated datePublished" datetime="2019-03-10T16:34:30+08:00">2019-03-10</time>
             
 
             
@@ -427,6 +427,7 @@
       
         <h2 id="c-接口"><a href="#c-接口" class="headerlink" title="c++接口"></a>c++接口</h2><p>尽管c++不存在接口,但是我们可以通过模拟的方式实现接口.</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> interface class</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> interface struct</span></span><br></pre></td></tr></table></figure>
+ <a id="more"></a>
 <h2 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h2><p>显而易见,纯虚函数的存在会导致该类的类型成为抽象,从而不能实例化.声明一个纯虚函数很简单.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> some_type <span class="title">your_function</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
 <p>我们可以规定接口类的函数只能是纯虚的.</p>
 
