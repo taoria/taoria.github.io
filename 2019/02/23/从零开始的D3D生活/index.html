@@ -100,21 +100,22 @@
 
 
 
-  <meta name="description" content="Hello World第零步永远是环境配置VS新建一个项目,我这里开发的是一个DLL项目 在预编译头中链接跟D3D有关的lib,这事儿就成了。">
+  <meta name="description" content="Hello World第零步永远是环境配置VS新建一个项目 在预编译头中链接跟D3D有关的lib,这事儿就成了。">
 <meta name="keywords" content="踩坑,开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从零开始的D3D生活(0)">
 <meta property="og:url" content="https://taoria.github.io/2019/02/23/从零开始的D3D生活/index.html">
 <meta property="og:site_name" content="只是另一个博客">
-<meta property="og:description" content="Hello World第零步永远是环境配置VS新建一个项目,我这里开发的是一个DLL项目 在预编译头中链接跟D3D有关的lib,这事儿就成了。">
+<meta property="og:description" content="Hello World第零步永远是环境配置VS新建一个项目 在预编译头中链接跟D3D有关的lib,这事儿就成了。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://taoria.github.io/2019/02/23/从零开始的D3D生活/00.png">
 <meta property="og:image" content="https://taoria.github.io/2019/02/23/从零开始的D3D生活/02.png">
 <meta property="og:image" content="https://taoria.github.io/2019/02/23/从零开始的D3D生活/01.png">
-<meta property="og:updated_time" content="2019-03-21T14:07:18.574Z">
+<meta property="og:image" content="https://taoria.github.io/2019/02/23/从零开始的D3D生活/04.png">
+<meta property="og:updated_time" content="2019-03-21T16:34:19.890Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从零开始的D3D生活(0)">
-<meta name="twitter:description" content="Hello World第零步永远是环境配置VS新建一个项目,我这里开发的是一个DLL项目 在预编译头中链接跟D3D有关的lib,这事儿就成了。">
+<meta name="twitter:description" content="Hello World第零步永远是环境配置VS新建一个项目 在预编译头中链接跟D3D有关的lib,这事儿就成了。">
 <meta name="twitter:image" content="https://taoria.github.io/2019/02/23/从零开始的D3D生活/00.png">
 
 
@@ -408,7 +409,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-03-21 22:07:18" itemprop="dateModified" datetime="2019-03-21T22:07:18+08:00">2019-03-21</time>
+                <time title="修改时间：2019-03-22 00:34:19" itemprop="dateModified" datetime="2019-03-22T00:34:19+08:00">2019-03-22</time>
               
             
           </span>
@@ -467,11 +468,11 @@
       
 
       
-        <h1 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h1><h2 id="第零步永远是环境配置"><a href="#第零步永远是环境配置" class="headerlink" title="第零步永远是环境配置"></a>第零步永远是环境配置</h2><p>VS新建一个项目,我这里开发的是一个DLL项目</p>
+        <h1 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h1><h2 id="第零步永远是环境配置"><a href="#第零步永远是环境配置" class="headerlink" title="第零步永远是环境配置"></a>第零步永远是环境配置</h2><p>VS新建一个项目</p>
 <p>在预编译头中链接跟D3D有关的lib,这事儿就成了。</p>
  <a id="more"></a>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">"d3dcompiler.lib"</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">"D3D12.lib"</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">"dxgi.lib"</span>)</span></span><br></pre></td></tr></table></figure>
-<p>顺便可以引用一些常用的头文件</p>
+<p>顺便可以引用一些常用的头文件这一步可以等一会.</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dxgi.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;d3d12.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;wrl/client.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> Microsoft::WRL;</span><br></pre></td></tr></table></figure>
 <h2 id="Ch-0-Hello-World之前，来获取你的显卡信息吧"><a href="#Ch-0-Hello-World之前，来获取你的显卡信息吧" class="headerlink" title="Ch.0 Hello World之前，来获取你的显卡信息吧"></a>Ch.0 Hello World之前，来获取你的显卡信息吧</h2><p>让我们来写一个最简单的D3D程序,来获取设备具有的显示适配器,它仅仅用到了一点点DXGI的功能.</p>
 <p>DXGI <em>DirectX Graphics Infrastructure</em> 是一套用来枚举显示器,显示模式,选择缓冲区格式,在进程间共享资源,为窗口或者监视器呈现渲染的帧的底层接口。</p>
@@ -526,9 +527,65 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ThrowIfFailed(CreateDXGIFactory( IID_PPV_ARGS(&amp;factory)));</span><br><span class="line"></span><br><span class="line">ComPtr&lt;IDXGIAdapter&gt; warpAdapter;</span><br><span class="line">ThrowIfFailed(factory-&gt;EnumWarpAdapter(IID_PPV_ARGS(&amp;warpAdapter)));</span><br></pre></td></tr></table></figure>
 <p>有了适配器之后,我们可以创建一个D3DDevice了</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ThrowIfFailed(D3D12CreateDevice(</span><br><span class="line">	warpAdapter.Get(),</span><br><span class="line">	D3D_FEATURE_LEVEL_11_0,</span><br><span class="line">	IID_PPV_ARGS(&amp;m_device)</span><br><span class="line">));</span><br></pre></td></tr></table></figure>
-<p>同时引入该device作为成员属性.</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//in App.h</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span>&#123;</span></span><br><span class="line">	<span class="comment">/*code here*/</span></span><br><span class="line">	ComPtr&lt;ID3D12CommandQueue&gt; m_commandQueue;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
+<p>同时引入该device作为成员属性.然后我们创建一个commandQueue,命令队列接收CPU提交的命令,GPU从中读取并执行这些命令.后面我们会详细讲道它.现在先让我们把它创建起来.并引入为成员变量.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">D3D12_COMMAND_QUEUE_DESC queueDesc = &#123;&#125;;</span><br><span class="line">queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;</span><br><span class="line">queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;</span><br><span class="line">ThrowIfFailed(m_device-&gt;CreateCommandQueue(&amp;queueDesc, IID_PPV_ARGS(&amp;m_commandQueue)));</span><br></pre></td></tr></table></figure>
+<p>在此之后,我们创建一个交换链(swap_chain)的描述.(不是描述符)<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">DXGI_SWAP_CHAIN_DESC1 swapChainDesc = &#123;&#125;;</span><br><span class="line">swapChainDesc.BufferCount = frame_count;</span><br><span class="line">swapChainDesc.Width = m_width;</span><br><span class="line">swapChainDesc.Height = m_height;</span><br><span class="line">swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;</span><br><span class="line">swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;</span><br><span class="line">swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;</span><br><span class="line">swapChainDesc.SampleDesc.Count = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ComPtr&lt;IDXGISwapChain1&gt; swapChain;</span><br><span class="line">ThrowIfFailed(factory-&gt;CreateSwapChainForHwnd(</span><br><span class="line">	m_commandQueue.Get(),       </span><br><span class="line">	m_hwnd,</span><br><span class="line">	&amp;swapChainDesc,</span><br><span class="line">	<span class="literal">nullptr</span>,</span><br><span class="line">	<span class="literal">nullptr</span>,</span><br><span class="line">	&amp;swapChain</span><br><span class="line">));</span><br></pre></td></tr></table></figure></p>
+<p>注意这里将m_hwnd引入为成员变量,等一会我们会给它赋上值.</p>
+<p>这里有很多陌生的概念,我们来介绍一下.</p>
+<p><em>swap chain 交换链</em></p>
+<p>交换链是一种优化机制.为了减少当前帧画面的绘制时间.可以先将下一帧的内容绘制在后台缓冲区(可能多个).将当前内容绘制在前台缓冲区.</p>
+<p>当绘制下一帧的时候,前后缓冲区互相交换.也就是交换.<br>通常而言.双重缓冲已经足够了.</p>
+<p><img src="/2019/02/23/从零开始的D3D生活/04.png" alt="交换链"></p>
+<p><em>描述符</em></p>
+<p>这是一种类似句柄的东西,它用来描述一种D3D的资源.D3D的资源通常可以复用.这样可以用不同的描述符来描述同一个资源.<br>一个描述符是以一种对GPU不透明(opaque)的形式,轻量的描述一个GPU对象的一组数据.</p>
+<p>但我们通过DXGI工厂创建交换链,以及通过Device创建命令队列的时候,这里用的只是对普通对象的描述,简单理解为类似一种配置就行了.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ThrowIfFailed(swapChain.As(&amp;m_swapChain));</span><br><span class="line">m_frameIndex = m_swapChain-&gt;GetCurrentBackBufferIndex();</span><br></pre></td></tr></table></figure>
+<p>看到上述代码的对象描述中有很多的常量.我们可以做一下简短的介绍</p>
+<p>英文能力强的话完全可以看文档来理解,虽然我觉得也<em>没人</em>会看我的这篇博客.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>常量名</th>
+<th>属性名称</th>
+<th>简单解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D3D12_COMMAND_QUEUE_FLAG_NONE</td>
+<td>Flags</td>
+<td>表示一个默认的命令队列</td>
+</tr>
+<tr>
+<td>D3D12_COMMAND_LIST_TYPE_DIRECT</td>
+<td>Type</td>
+<td>表示该命令缓冲区是直接被GPU执行的</td>
+</tr>
+<tr>
+<td>DXGI_FORMAT_R8G8B8A8_UNORM</td>
+<td>Format</td>
+<td>表示这个交换链的显示格式是R8G8B8A8,这里的常量是<a href="https://docs.microsoft.com/en-us/windows/desktop/api/dxgiformat/ne-dxgiformat-dxgi_format" target="_blank" rel="noopener">DXGI_FORMAT</a>的一系列枚举值当中的一个</td>
+</tr>
+<tr>
+<td>DXGI_USAGE_RENDER_TARGET_OUTPUT</td>
+<td>BufferUsage</td>
+<td>拿来干啥的:这个交换链是输出给RENDER TARGET的.</td>
+</tr>
+<tr>
+<td>DXGI_SWAP_EFFECT_FLIP_DISCARD</td>
+<td>SwapEffect</td>
+<td>Present 呈现后丢掉back buffer的东西.<a href="https://docs.microsoft.com/zh-cn/windows/desktop/direct3ddxgi/dxgi-flip-model" target="_blank" rel="noopener">flip</a>是一种呈现模式,这在win8之后引入.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>不要急,Direct的概念就是扎堆的.很难拆成一步步的小例子来.所以这对完全没有图形编程经验的新人程序员非常不友好.但是无论如何,我们不得不尝试理解这些概念.毕竟我们到现在连第一步都没迈出去.</p>
+<p>我们接下来要创建一个<em>描述符堆</em></p>
+<p><em>描述符堆</em></p>
+<p>粗要的解释,就是一个描述符的容器.要创建一个描述符堆,自然也需要一个描述符堆的<strong>描述</strong>，<br>我们可以看到很多D3D的资源都是采用这种方式来创建的.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Describe and create a render target view (RTV) descriptor heap.</span></span><br><span class="line">	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc = &#123;&#125;;</span><br><span class="line">	rtvHeapDesc.NumDescriptors = frame_count;</span><br><span class="line">	rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;</span><br><span class="line">	rtvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;</span><br><span class="line">	ThrowIfFailed(m_device-&gt;CreateDescriptorHeap(&amp;rtvHeapDesc, IID_PPV_ARGS(&amp;m_rtvHeap)));</span><br><span class="line"></span><br><span class="line">	m_rtvDescriptorSize = m_device-&gt;GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这里我们自然要创建swap chain对应的render target view的描述符堆.有了这个描述符堆,我们就可以为我们的swap_chain对应的两个缓冲区所对应的frame创建对应的RTV了.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="function">CD3DX12_CPU_DESCRIPTOR_HANDLE <span class="title">rtvHandle</span><span class="params">(m_rtvHeap-&gt;GetCPUDescriptorHandleForHeapStart())</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Create a RTV for each frame.</span></span><br><span class="line">	<span class="keyword">for</span> (UINT n = <span class="number">0</span>; n &lt; frame_count; n++)</span><br><span class="line">	&#123;	</span><br><span class="line">		ThrowIfFailed(m_swapChain-&gt;GetBuffer(n, IID_PPV_ARGS(&amp;m_renderTargets[n])));</span><br><span class="line">		m_device-&gt;CreateRenderTargetView(m_renderTargets[n].Get(), <span class="literal">nullptr</span>, rtvHandle);</span><br><span class="line">		rtvHandle.Offset(<span class="number">1</span>, m_rtvDescriptorSize);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ThrowIfFailed(m_device-&gt;CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&amp;m_commandAllocator)));</span><br></pre></td></tr></table></figure>
       
     </div>
 
