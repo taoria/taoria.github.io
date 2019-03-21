@@ -100,17 +100,18 @@
 
 
 
-  <meta name="description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
+  <meta name="description" content="本人是一位c++苦手,编译经常直接红.因此记录一下学习过程中遇到的挖坑点. c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
+<meta name="keywords" content="踩坑,开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CPP补完计划">
 <meta property="og:url" content="https://taoria.github.io/2019/03/10/fill/index.html">
 <meta property="og:site_name" content="只是另一个博客">
-<meta property="og:description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
+<meta property="og:description" content="本人是一位c++苦手,编译经常直接红.因此记录一下学习过程中遇到的挖坑点. c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-10T08:43:35.458Z">
+<meta property="og:updated_time" content="2019-03-21T13:42:11.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CPP补完计划">
-<meta name="twitter:description" content="c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
+<meta name="twitter:description" content="本人是一位c++苦手,编译经常直接红.因此记录一下学习过程中遇到的挖坑点. c++接口尽管c++不存在接口,但是我们可以通过模拟的方式实现接口. 1234#ifdef __cpp#define interface class#else#define interface struct">
 
 
 
@@ -386,16 +387,46 @@
                 
               
 
-              <time title="创建时间：2019-03-10 16:34:30 / 修改时间：16:43:35" itemprop="dateCreated datePublished" datetime="2019-03-10T16:34:30+08:00">2019-03-10</time>
+              <time title="创建时间：2019-03-10 16:34:30" itemprop="dateCreated datePublished" datetime="2019-03-10T16:34:30+08:00">2019-03-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-03-21 21:42:11" itemprop="dateModified" datetime="2019-03-21T21:42:11+08:00">2019-03-21</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -432,12 +463,15 @@
       
 
       
-        <h2 id="c-接口"><a href="#c-接口" class="headerlink" title="c++接口"></a>c++接口</h2><p>尽管c++不存在接口,但是我们可以通过模拟的方式实现接口.</p>
+        <p>本人是一位c++苦手,编译经常直接红.因此记录一下学习过程中遇到的挖坑点.</p>
+<h2 id="c-接口"><a href="#c-接口" class="headerlink" title="c++接口"></a>c++接口</h2><p>尽管c++不存在接口,但是我们可以通过模拟的方式实现接口.</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> interface class</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> interface struct</span></span><br></pre></td></tr></table></figure>
  <a id="more"></a>
 <h2 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h2><p>显而易见,纯虚函数的存在会导致该类的类型成为抽象,从而不能实例化.声明一个纯虚函数很简单.<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> some_type <span class="title">your_function</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br></pre></td></tr></table></figure></p>
 <p>我们可以规定接口类的函数只能是纯虚的.</p>
-
+<p>特此mark</p>
+<p>是的,某位博主经常因为虚函数忘了implement而报错….</p>
+<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2>
       
     </div>
 
@@ -457,6 +491,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/踩坑/" rel="tag"># 踩坑</a>
+          
+            <a href="/tags/开发/" rel="tag"># 开发</a>
+          
+        </div>
       
 
       
@@ -631,7 +673,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-接口"><span class="nav-number">1.</span> <span class="nav-text">c++接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纯虚函数"><span class="nav-number">2.</span> <span class="nav-text">纯虚函数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-接口"><span class="nav-number">1.</span> <span class="nav-text">c++接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纯虚函数"><span class="nav-number">2.</span> <span class="nav-text">纯虚函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">3.</span> <span class="nav-text"> </span></a></li></ol></div>
             
 
           </div>
