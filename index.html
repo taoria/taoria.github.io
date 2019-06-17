@@ -341,7 +341,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/02/23/从零开始的D3D生活/">
+    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/06/17/unity-monitor-property/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="taoria">
@@ -361,7 +361,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/02/23/从零开始的D3D生活/" class="post-title-link" itemprop="url">从零开始的D3D生活(0)</a>
+                <a href="/2019/06/17/unity-monitor-property/" class="post-title-link" itemprop="url">unity monitor property</a>
               
             
           </h1>
@@ -386,46 +386,16 @@
                 
               
 
-              <time title="创建时间：2019-02-23 17:26:56" itemprop="dateCreated datePublished" datetime="2019-02-23T17:26:56+08:00">2019-02-23</time>
+              <time title="创建时间：2019-06-17 16:28:31 / 修改时间：19:42:16" itemprop="dateCreated datePublished" datetime="2019-06-17T16:28:31+08:00">2019-06-17</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-03-30 15:43:13" itemprop="dateModified" datetime="2019-03-30T15:43:13+08:00">2019-03-30</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -456,17 +426,165 @@
 
       
         
-          <h1 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h1><h2 id="第零步永远是环境配置"><a href="#第零步永远是环境配置" class="headerlink" title="第零步永远是环境配置"></a>第零步永远是环境配置</h2><p>VS新建一个项目</p>
-<p>在预编译头中链接跟D3D有关的lib,这事儿就成了。</p>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/23/从零开始的D3D生活/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
+            <p>I was working on a progress bar or something like that to monitor a value.</p>
+<p>The problem is how I can monitor the value neatly.since I want it to be commonly used. The first idea come to my head is to make a reflection system to catch the value by add a reference to the variable .</p>
+<p>but it’s strange anyway .so I used a string to determine which feature to be monitored.</p>
+<p>first there are target and a property name.</p>
+<p>and then we have a class.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class ProgressListener : MonoBehaviour&#123;</span><br><span class="line">    [HideInInspector]</span><br><span class="line">    public float progressListened;</span><br><span class="line">    [HideInInspector]</span><br><span class="line">    public string progressName =&quot;unidentified&quot;;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    public ScriptableObject target;</span><br><span class="line">    private Image _image;</span><br><span class="line">    private bool _isTargetNotNull;</span><br><span class="line">    private void Awake()&#123;</span><br><span class="line">        _isTargetNotNull = target != null;</span><br><span class="line">        _image = this.GetComponent&lt;Image&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private float GetValue()&#123;</span><br><span class="line">        if (_isTargetNotNull)&#123;</span><br><span class="line">            Type targetType = target.GetType();</span><br><span class="line">            var propertyInfo = targetType.GetProperty(progressName);</span><br><span class="line">            if (propertyInfo != null) return (float) propertyInfo.GetValue(target);</span><br><span class="line">        &#125;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    void Update()&#123;</span><br><span class="line">        progressListened = GetValue();</span><br><span class="line">        _image.fillAmount = progressListened;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>and to make it accessible from inspector.we iterator the scriptobject’s member and give a popup list to user.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class ProgressListenerDrawer : Editor&#123;</span><br><span class="line">    private SerializedProperty _serializedTarget;</span><br><span class="line">    public string[] targetFeatureNames;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private void GetFeatureNames()&#123;</span><br><span class="line">        var serializedTargetValues= serializedObject.FindProperty(&quot;target&quot;).objectReferenceValue;</span><br><span class="line">        var targetFeatureNamesList = new List&lt;string&gt;();</span><br><span class="line">        foreach (var variable in serializedTargetValues.GetType().GetProperties())&#123;</span><br><span class="line">            if(variable.PropertyType==typeof(float))</span><br><span class="line">                targetFeatureNamesList.Add(variable.Name);</span><br><span class="line">        &#125;</span><br><span class="line">        targetFeatureNames = targetFeatureNamesList.ToArray();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    void OnEnable()&#123;</span><br><span class="line">        _serializedTarget = serializedObject.FindProperty(&quot;target&quot;);</span><br><span class="line">        GetFeatureNames();</span><br><span class="line">        var foundProperty= serializedObject.FindProperty(&quot;progressName&quot;);</span><br><span class="line">        index = Array.IndexOf(targetFeatureNames,foundProperty.stringValue);</span><br><span class="line">    &#125;</span><br><span class="line">    private int index;</span><br><span class="line">    public override void OnInspectorGUI()&#123;</span><br><span class="line">        base.OnInspectorGUI();</span><br><span class="line">        index = EditorGUILayout.Popup(</span><br><span class="line">            &quot;Feature:&quot;,</span><br><span class="line">            index,</span><br><span class="line">            targetFeatureNames);</span><br><span class="line">        var foundProperty= serializedObject.FindProperty(&quot;progressName&quot;);</span><br><span class="line">        foundProperty.stringValue = (targetFeatureNames[index]);</span><br><span class="line">        foundProperty.serializedObject.ApplyModifiedProperties();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>It’s very convenient anway</p>
+
           
-          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+        
+    
+        
+            
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/05/27/2dlight/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taoria">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="只是另一个博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/27/2dlight/" class="post-title-link" itemprop="url">2dlight</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-27 23:13:33 / 修改时间：23:55:33" itemprop="dateCreated datePublished" datetime="2019-05-27T23:13:33+08:00">2019-05-27</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Sprite-Diffuse"><a href="#Sprite-Diffuse" class="headerlink" title="Sprite Diffuse"></a>Sprite Diffuse</h1><p>sprite 漫反射材质在order in layer 以及z轴相同时重叠,会重复混合.</p>
+<p><img src="/2019/05/27/2dlight/00.png" alt="图片"></p>
+<p>修改z轴和sorting layer会解决这个冲突</p>
+
+          
         
       
     </div>
@@ -1013,6 +1131,188 @@
         
     
         
+            
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/02/23/从零开始的D3D生活/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taoria">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="只是另一个博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/23/从零开始的D3D生活/" class="post-title-link" itemprop="url">从零开始的D3D生活(0)</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-02-23 17:26:56" itemprop="dateCreated datePublished" datetime="2019-02-23T17:26:56+08:00">2019-02-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-17 19:43:07" itemprop="dateModified" datetime="2019-06-17T19:43:07+08:00">2019-06-17</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Hello-World"><a href="#Hello-World" class="headerlink" title="Hello World"></a>Hello World</h1><h2 id="第零步永远是环境配置"><a href="#第零步永远是环境配置" class="headerlink" title="第零步永远是环境配置"></a>第零步永远是环境配置</h2><p>VS新建一个项目</p>
+<p>在预编译头中链接跟D3D有关的lib,这事儿就成了。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/02/23/从零开始的D3D生活/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+        
+    
+        
     
         
             
@@ -1387,166 +1687,13 @@
 
         
     
-        
-            
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/01/19/hello-world-1/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="taoria">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="只是另一个博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/19/hello-world-1/" class="post-title-link" itemprop="url">Ch.1</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-19 22:33:35" itemprop="dateCreated datePublished" datetime="2019-01-19T22:33:35+08:00">2019-01-19</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-01-20 17:25:21" itemprop="dateModified" datetime="2019-01-20T17:25:21+08:00">2019-01-20</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="只是另一个博客"><a href="#只是另一个博客" class="headerlink" title="只是另一个博客"></a>只是另一个博客</h1><p>用来学习一个的Blog.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-        
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1589,7 +1736,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1846,6 +1993,8 @@
 
   
   
+    
+      
     
       
     
