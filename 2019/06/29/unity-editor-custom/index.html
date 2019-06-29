@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.0.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="danmaku尝试给我的弹幕游戏设计技能. 技能的信息写在了ScriptableObject内… 具体思路是这样的.通过timelineList中存储的时间片信息,来获取每个时刻需要释放的弹幕的信息.从而实现弹幕变换的效果. 根据timelineList中的时间片信息.获取对应的额外信息.这些额外信息会在游戏中被运用. 叭多说,show you the code.12345678910111213">
+<meta property="og:type" content="article">
+<meta property="og:title" content="unity-editor-custom">
+<meta property="og:url" content="https://taoria.github.io/2019/06/29/unity-editor-custom/index.html">
+<meta property="og:site_name" content="只是另一个博客">
+<meta property="og:description" content="danmaku尝试给我的弹幕游戏设计技能. 技能的信息写在了ScriptableObject内… 具体思路是这样的.通过timelineList中存储的时间片信息,来获取每个时刻需要释放的弹幕的信息.从而实现弹幕变换的效果. 根据timelineList中的时间片信息.获取对应的额外信息.这些额外信息会在游戏中被运用. 叭多说,show you the code.12345678910111213">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-29T15:51:59.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="unity-editor-custom">
+<meta name="twitter:description" content="danmaku尝试给我的弹幕游戏设计技能. 技能的信息写在了ScriptableObject内… 具体思路是这样的.通过timelineList中存储的时间片信息,来获取每个时刻需要释放的弹幕的信息.从而实现弹幕变换的效果. 根据timelineList中的时间片信息.获取对应的额外信息.这些额外信息会在游戏中被运用. 叭多说,show you the code.12345678910111213">
+
+
+
+
+
+
+  <link rel="canonical" href="https://taoria.github.io/2019/06/29/unity-editor-custom/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>unity-editor-custom | 只是另一个博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">只是另一个博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/06/29/unity-editor-custom/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taoria">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="只是另一个博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">unity-editor-custom
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-29 23:16:46 / 修改时间：23:51:59" itemprop="dateCreated datePublished" datetime="2019-06-29T23:16:46+08:00">2019-06-29</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="danmaku"><a href="#danmaku" class="headerlink" title="danmaku"></a>danmaku</h1><p>尝试给我的弹幕游戏设计技能.</p>
+<p>技能的信息写在了ScriptableObject内…</p>
+<p>具体思路是这样的.通过timelineList中存储的时间片信息,来获取每个时刻需要释放的弹幕的信息.从而实现弹幕变换的效果.</p>
+<p>根据timelineList中的时间片信息.获取对应的额外信息.这些额外信息会在游戏中被运用.</p>
+<p>叭多说,show you the code.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class Skill : ScriptableObject&#123;</span><br><span class="line">    public GameObject danmaku;</span><br><span class="line">    public float basicDamage;</span><br><span class="line">    public float basicSpeed;</span><br><span class="line">    protected SortedSet&lt;TimelineUnit&gt; timelineUnits;</span><br><span class="line">    public List&lt;TimelineUnit&gt; timelineList;</span><br><span class="line">    [Serializable]</span><br><span class="line">    public class TimelineUnit:IComparable&#123;</span><br><span class="line">        public float showingTime;</span><br><span class="line">        public GameObject danmakuReference;</span><br><span class="line">        public UnitType    unitType;</span><br><span class="line">        public UnitAdditionalInfo unitAdditionalInfo;</span><br><span class="line">        public enum UnitType&#123;</span><br><span class="line">            Flowering,</span><br><span class="line">            Single,</span><br><span class="line">            Sector,</span><br><span class="line">            Beam,</span><br><span class="line">            BeamingDanmaku</span><br><span class="line">        &#125;</span><br><span class="line">        public int CompareTo(object other)&#123;</span><br><span class="line">            TimelineUnit timeLineOther =other as TimelineUnit;</span><br><span class="line">            if (timeLineOther != null) return (int) ((showingTime - timeLineOther.showingTime) * 100);</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    [Serializable]</span><br><span class="line">    public class UnitAdditionalInfo&#123;</span><br><span class="line">        public float speedModifier;</span><br><span class="line">    &#125;</span><br><span class="line">    public void Trigger()&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">[Serializable]</span><br><span class="line">public class FloweringAdditionalInfo:Skill.UnitAdditionalInfo&#123;</span><br><span class="line">    public int numbers;</span><br><span class="line">    public float damageModifier;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//。。。。</span><br></pre></td></tr></table></figure></p>
+<p>同时editor方面,根据选定的UnitType来生成自定义信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">public class SkillInfoDrawer : PropertyDrawer&#123;</span><br><span class="line">    public int fieldNum;</span><br><span class="line"></span><br><span class="line">    public Skill.TimelineUnit.UnitType unitType;</span><br><span class="line"></span><br><span class="line">    // Start is called before the first frame update</span><br><span class="line">    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)&#123;</span><br><span class="line">        var LabelWidth = EditorGUIUtility.labelWidth;</span><br><span class="line">        var targetSkill = property.serializedObject.targetObject as Skill;</span><br><span class="line">        var propertyPath = property.propertyPath;</span><br><span class="line">        var lastIndexOf = propertyPath.LastIndexOf(&apos;.&apos;);</span><br><span class="line">        if (lastIndexOf == -1)&#123;</span><br><span class="line">            Debug.LogError(&quot;Wrong path of object &quot; + property);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        var timeUnitPath = propertyPath.Substring(0, lastIndexOf);</span><br><span class="line">        var timeUnit = property.serializedObject.FindProperty(timeUnitPath);</span><br><span class="line">        var unitTypeFromTimeUnit = property.serializedObject.FindProperty(timeUnitPath + &quot;.unitType&quot;);</span><br><span class="line">        var indexOfUnitType = unitTypeFromTimeUnit.enumValueIndex;</span><br><span class="line">        var nameOfUnitType = unitTypeFromTimeUnit.enumNames[indexOfUnitType];</span><br><span class="line">        var baseName = &quot;AdditionalInfo&quot;;</span><br><span class="line">        var reflectionName = nameOfUnitType + baseName;</span><br><span class="line">        var type = Type.GetType(reflectionName);</span><br><span class="line">        if (type == null)&#123;</span><br><span class="line">            Debug.LogError(&quot;No such reflection unit info &quot; + reflectionName);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        var timelineUnitFromSerializedProperty = Tools.SerializedPropertyToObject&lt;Skill.TimelineUnit&gt;(timeUnit);</span><br><span class="line">        Skill.UnitAdditionalInfo unitAdditionalInfo = null;</span><br><span class="line">        if (timelineUnitFromSerializedProperty == null) return;</span><br><span class="line">        if (timelineUnitFromSerializedProperty.unitAdditionalInfo.GetType()!=type)&#123;</span><br><span class="line">            var constructors = type.GetConstructors();</span><br><span class="line">            unitAdditionalInfo = constructors[0].Invoke(null) as Skill.UnitAdditionalInfo;</span><br><span class="line">            timelineUnitFromSerializedProperty.unitAdditionalInfo = unitAdditionalInfo;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            unitAdditionalInfo = timelineUnitFromSerializedProperty.unitAdditionalInfo;</span><br><span class="line">            Debug.Log(&quot;hi&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        var fields = type.GetFields();</span><br><span class="line">        var startPosition = new Rect(position);</span><br><span class="line">        if (unitAdditionalInfo == null) return;</span><br><span class="line">        foreach (var field in fields)&#123;</span><br><span class="line">            var labelRect = new Rect(startPosition.x, startPosition.y, LabelWidth, 16);</span><br><span class="line">            var valueRect = new Rect(startPosition.x + 200, startPosition.y, LabelWidth, 16);</span><br><span class="line">            EditorGUI.LabelField(labelRect, field.Name);</span><br><span class="line">            if (field.FieldType == typeof(float))&#123;</span><br><span class="line">                var res = field.GetValue(unitAdditionalInfo) is float ? (float) field.GetValue(unitAdditionalInfo) : -1;</span><br><span class="line">                res = EditorGUI.FloatField(valueRect, res);</span><br><span class="line">                field.SetValue(unitAdditionalInfo, res);</span><br><span class="line">                property.serializedObject.ApplyModifiedProperties();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            startPosition.y += 16;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fieldNum = fields.Length;</span><br><span class="line">    &#125;</span><br><span class="line">    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)&#123;</span><br><span class="line">        return fieldNum * base.GetPropertyHeight(property, label);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在网络上看到了一段serializedProperty to custom class的代码.魔改了一部分让它能够兼容list..</p>
+<p>我觉得这串代码效率和思路有问题.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">public static T SerializedPropertyToObject&lt;T&gt;(SerializedProperty property)&#123;</span><br><span class="line">    return GetNestedObject&lt;T&gt;(property.propertyPath, GetSerializedPropertyRootComponent(property),</span><br><span class="line">        true); //The &quot;true&quot; means we will also check all base classes</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static Object GetSerializedPropertyRootComponent(SerializedProperty property)&#123;</span><br><span class="line">    return property.serializedObject.targetObject;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static T GetNestedObject&lt;T&gt;(string path, object obj, bool includeAllBases = false)&#123;</span><br><span class="line">    //taoria: here the code has some issues.</span><br><span class="line">    foreach (var part in path.Split(&apos;.&apos;))&#123;</span><br><span class="line">        obj = GetFieldOrPropertyValue&lt;object&gt;(part, obj, includeAllBases);</span><br><span class="line">        Debug.Log(obj);</span><br><span class="line">        if (obj == null) continue;</span><br><span class="line"></span><br><span class="line">        if (obj.GetType().GetGenericTypeDefinition() == typeof(List&lt;&gt;))&#123;</span><br><span class="line">            var first = path.LastIndexOf(&apos;[&apos;);</span><br><span class="line">            var last = path.LastIndexOf(&apos;]&apos;);</span><br><span class="line">            var index = int.Parse(path.Substring(first + 1, last - first - 1));</span><br><span class="line">            var list = (List&lt;T&gt;) obj;</span><br><span class="line">            return list[index];</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (T) obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static T GetFieldOrPropertyValue&lt;T&gt;(string fieldName, object obj, bool includeAllBases = false,</span><br><span class="line">    BindingFlags bindings =</span><br><span class="line">        BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)&#123;</span><br><span class="line">    var field = obj.GetType().GetField(fieldName, bindings);</span><br><span class="line">    if (field != null) return (T) field.GetValue(obj);</span><br><span class="line">    var property = obj.GetType().GetProperty(fieldName, bindings);</span><br><span class="line">    if (property != null) return (T) property.GetValue(obj, null);</span><br><span class="line"></span><br><span class="line">    if (includeAllBases)</span><br><span class="line">        foreach (var type in GetBaseClassesAndInterfaces(obj.GetType()))&#123;</span><br><span class="line">            field = type.GetField(fieldName, bindings);</span><br><span class="line">            if (field != null) return (T) field.GetValue(obj);</span><br><span class="line"></span><br><span class="line">            property = type.GetProperty(fieldName, bindings);</span><br><span class="line">            if (property != null) return (T) property.GetValue(obj, null);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    return default;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void SetFieldOrPropertyValue&lt;T&gt;(string fieldName, object obj, object value,</span><br><span class="line">    bool includeAllBases = false,</span><br><span class="line">    BindingFlags bindings =</span><br><span class="line">        BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)&#123;</span><br><span class="line">    var field = obj.GetType().GetField(fieldName, bindings);</span><br><span class="line">    if (field != null)&#123;</span><br><span class="line">        field.SetValue(obj, value);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var property = obj.GetType().GetProperty(fieldName, bindings);</span><br><span class="line">    if (property != null)&#123;</span><br><span class="line">        property.SetValue(obj, value, null);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (includeAllBases)</span><br><span class="line">        foreach (var type in GetBaseClassesAndInterfaces(obj.GetType()))&#123;</span><br><span class="line">            field = type.GetField(fieldName, bindings);</span><br><span class="line">            if (field != null)&#123;</span><br><span class="line">                field.SetValue(obj, value);</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            property = type.GetProperty(fieldName, bindings);</span><br><span class="line">            if (property != null)&#123;</span><br><span class="line">                property.SetValue(obj, value, null);</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static IEnumerable&lt;Type&gt; GetBaseClassesAndInterfaces(this Type type, bool includeSelf = false)&#123;</span><br><span class="line">    var allTypes = new List&lt;Type&gt;();</span><br><span class="line"></span><br><span class="line">    if (includeSelf) allTypes.Add(type);</span><br><span class="line"></span><br><span class="line">    if (type.BaseType == typeof(object))</span><br><span class="line">        allTypes.AddRange(type.GetInterfaces());</span><br><span class="line">    else</span><br><span class="line">        allTypes.AddRange(</span><br><span class="line">            Enumerable</span><br><span class="line">                .Repeat(type.BaseType, 1)</span><br><span class="line">                .Concat(type.GetInterfaces())</span><br><span class="line">                .Concat(type.BaseType.GetBaseClassesAndInterfaces())</span><br><span class="line">                .Distinct());</span><br><span class="line">    //I found this on stackoverflow</span><br><span class="line"></span><br><span class="line">    return allTypes;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/17/unity-monitor-property/" rel="next" title="unity monitor property">
+                <i class="fa fa-chevron-left"></i> unity monitor property
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="taoria">
+            
+              <p class="site-author-name" itemprop="name">taoria</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#danmaku"><span class="nav-number">1.</span> <span class="nav-text">danmaku</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">taoria</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.0.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=7.0.0"></script>
+
+  <script src="/js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/schemes/muse.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=7.0.0"></script>
+<script src="/js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+      for (i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<style>
+.MathJax_Display {
+  overflow: auto hidden;
+}
+</style>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

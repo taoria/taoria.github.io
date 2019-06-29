@@ -341,6 +341,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/06/29/unity-editor-custom/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="taoria">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="只是另一个博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/06/29/unity-editor-custom/" class="post-title-link" itemprop="url">unity-editor-custom</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-29 23:16:46 / 修改时间：23:51:59" itemprop="dateCreated datePublished" datetime="2019-06-29T23:16:46+08:00">2019-06-29</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="danmaku"><a href="#danmaku" class="headerlink" title="danmaku"></a>danmaku</h1><p>尝试给我的弹幕游戏设计技能.</p>
+<p>技能的信息写在了ScriptableObject内…</p>
+<p>具体思路是这样的.通过timelineList中存储的时间片信息,来获取每个时刻需要释放的弹幕的信息.从而实现弹幕变换的效果.</p>
+<p>根据timelineList中的时间片信息.获取对应的额外信息.这些额外信息会在游戏中被运用.</p>
+<p>叭多说,show you the code.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">public class Skill : ScriptableObject&#123;</span><br><span class="line">    public GameObject danmaku;</span><br><span class="line">    public float basicDamage;</span><br><span class="line">    public float basicSpeed;</span><br><span class="line">    protected SortedSet&lt;TimelineUnit&gt; timelineUnits;</span><br><span class="line">    public List&lt;TimelineUnit&gt; timelineList;</span><br><span class="line">    [Serializable]</span><br><span class="line">    public class TimelineUnit:IComparable&#123;</span><br><span class="line">        public float showingTime;</span><br><span class="line">        public GameObject danmakuReference;</span><br><span class="line">        public UnitType    unitType;</span><br><span class="line">        public UnitAdditionalInfo unitAdditionalInfo;</span><br><span class="line">        public enum UnitType&#123;</span><br><span class="line">            Flowering,</span><br><span class="line">            Single,</span><br><span class="line">            Sector,</span><br><span class="line">            Beam,</span><br><span class="line">            BeamingDanmaku</span><br><span class="line">        &#125;</span><br><span class="line">        public int CompareTo(object other)&#123;</span><br><span class="line">            TimelineUnit timeLineOther =other as TimelineUnit;</span><br><span class="line">            if (timeLineOther != null) return (int) ((showingTime - timeLineOther.showingTime) * 100);</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    [Serializable]</span><br><span class="line">    public class UnitAdditionalInfo&#123;</span><br><span class="line">        public float speedModifier;</span><br><span class="line">    &#125;</span><br><span class="line">    public void Trigger()&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">[Serializable]</span><br><span class="line">public class FloweringAdditionalInfo:Skill.UnitAdditionalInfo&#123;</span><br><span class="line">    public int numbers;</span><br><span class="line">    public float damageModifier;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//。。。。</span><br></pre></td></tr></table></figure></p>
+<p>同时editor方面,根据选定的UnitType来生成自定义信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">public class SkillInfoDrawer : PropertyDrawer&#123;</span><br><span class="line">    public int fieldNum;</span><br><span class="line"></span><br><span class="line">    public Skill.TimelineUnit.UnitType unitType;</span><br><span class="line"></span><br><span class="line">    // Start is called before the first frame update</span><br><span class="line">    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)&#123;</span><br><span class="line">        var LabelWidth = EditorGUIUtility.labelWidth;</span><br><span class="line">        var targetSkill = property.serializedObject.targetObject as Skill;</span><br><span class="line">        var propertyPath = property.propertyPath;</span><br><span class="line">        var lastIndexOf = propertyPath.LastIndexOf(&apos;.&apos;);</span><br><span class="line">        if (lastIndexOf == -1)&#123;</span><br><span class="line">            Debug.LogError(&quot;Wrong path of object &quot; + property);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        var timeUnitPath = propertyPath.Substring(0, lastIndexOf);</span><br><span class="line">        var timeUnit = property.serializedObject.FindProperty(timeUnitPath);</span><br><span class="line">        var unitTypeFromTimeUnit = property.serializedObject.FindProperty(timeUnitPath + &quot;.unitType&quot;);</span><br><span class="line">        var indexOfUnitType = unitTypeFromTimeUnit.enumValueIndex;</span><br><span class="line">        var nameOfUnitType = unitTypeFromTimeUnit.enumNames[indexOfUnitType];</span><br><span class="line">        var baseName = &quot;AdditionalInfo&quot;;</span><br><span class="line">        var reflectionName = nameOfUnitType + baseName;</span><br><span class="line">        var type = Type.GetType(reflectionName);</span><br><span class="line">        if (type == null)&#123;</span><br><span class="line">            Debug.LogError(&quot;No such reflection unit info &quot; + reflectionName);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        var timelineUnitFromSerializedProperty = Tools.SerializedPropertyToObject&lt;Skill.TimelineUnit&gt;(timeUnit);</span><br><span class="line">        Skill.UnitAdditionalInfo unitAdditionalInfo = null;</span><br><span class="line">        if (timelineUnitFromSerializedProperty == null) return;</span><br><span class="line">        if (timelineUnitFromSerializedProperty.unitAdditionalInfo.GetType()!=type)&#123;</span><br><span class="line">            var constructors = type.GetConstructors();</span><br><span class="line">            unitAdditionalInfo = constructors[0].Invoke(null) as Skill.UnitAdditionalInfo;</span><br><span class="line">            timelineUnitFromSerializedProperty.unitAdditionalInfo = unitAdditionalInfo;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            unitAdditionalInfo = timelineUnitFromSerializedProperty.unitAdditionalInfo;</span><br><span class="line">            Debug.Log(&quot;hi&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        var fields = type.GetFields();</span><br><span class="line">        var startPosition = new Rect(position);</span><br><span class="line">        if (unitAdditionalInfo == null) return;</span><br><span class="line">        foreach (var field in fields)&#123;</span><br><span class="line">            var labelRect = new Rect(startPosition.x, startPosition.y, LabelWidth, 16);</span><br><span class="line">            var valueRect = new Rect(startPosition.x + 200, startPosition.y, LabelWidth, 16);</span><br><span class="line">            EditorGUI.LabelField(labelRect, field.Name);</span><br><span class="line">            if (field.FieldType == typeof(float))&#123;</span><br><span class="line">                var res = field.GetValue(unitAdditionalInfo) is float ? (float) field.GetValue(unitAdditionalInfo) : -1;</span><br><span class="line">                res = EditorGUI.FloatField(valueRect, res);</span><br><span class="line">                field.SetValue(unitAdditionalInfo, res);</span><br><span class="line">                property.serializedObject.ApplyModifiedProperties();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            startPosition.y += 16;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fieldNum = fields.Length;</span><br><span class="line">    &#125;</span><br><span class="line">    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)&#123;</span><br><span class="line">        return fieldNum * base.GetPropertyHeight(property, label);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在网络上看到了一段serializedProperty to custom class的代码.魔改了一部分让它能够兼容list..</p>
+<p>我觉得这串代码效率和思路有问题.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">public static T SerializedPropertyToObject&lt;T&gt;(SerializedProperty property)&#123;</span><br><span class="line">    return GetNestedObject&lt;T&gt;(property.propertyPath, GetSerializedPropertyRootComponent(property),</span><br><span class="line">        true); //The &quot;true&quot; means we will also check all base classes</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static Object GetSerializedPropertyRootComponent(SerializedProperty property)&#123;</span><br><span class="line">    return property.serializedObject.targetObject;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static T GetNestedObject&lt;T&gt;(string path, object obj, bool includeAllBases = false)&#123;</span><br><span class="line">    //taoria: here the code has some issues.</span><br><span class="line">    foreach (var part in path.Split(&apos;.&apos;))&#123;</span><br><span class="line">        obj = GetFieldOrPropertyValue&lt;object&gt;(part, obj, includeAllBases);</span><br><span class="line">        Debug.Log(obj);</span><br><span class="line">        if (obj == null) continue;</span><br><span class="line"></span><br><span class="line">        if (obj.GetType().GetGenericTypeDefinition() == typeof(List&lt;&gt;))&#123;</span><br><span class="line">            var first = path.LastIndexOf(&apos;[&apos;);</span><br><span class="line">            var last = path.LastIndexOf(&apos;]&apos;);</span><br><span class="line">            var index = int.Parse(path.Substring(first + 1, last - first - 1));</span><br><span class="line">            var list = (List&lt;T&gt;) obj;</span><br><span class="line">            return list[index];</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (T) obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static T GetFieldOrPropertyValue&lt;T&gt;(string fieldName, object obj, bool includeAllBases = false,</span><br><span class="line">    BindingFlags bindings =</span><br><span class="line">        BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)&#123;</span><br><span class="line">    var field = obj.GetType().GetField(fieldName, bindings);</span><br><span class="line">    if (field != null) return (T) field.GetValue(obj);</span><br><span class="line">    var property = obj.GetType().GetProperty(fieldName, bindings);</span><br><span class="line">    if (property != null) return (T) property.GetValue(obj, null);</span><br><span class="line"></span><br><span class="line">    if (includeAllBases)</span><br><span class="line">        foreach (var type in GetBaseClassesAndInterfaces(obj.GetType()))&#123;</span><br><span class="line">            field = type.GetField(fieldName, bindings);</span><br><span class="line">            if (field != null) return (T) field.GetValue(obj);</span><br><span class="line"></span><br><span class="line">            property = type.GetProperty(fieldName, bindings);</span><br><span class="line">            if (property != null) return (T) property.GetValue(obj, null);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    return default;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static void SetFieldOrPropertyValue&lt;T&gt;(string fieldName, object obj, object value,</span><br><span class="line">    bool includeAllBases = false,</span><br><span class="line">    BindingFlags bindings =</span><br><span class="line">        BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)&#123;</span><br><span class="line">    var field = obj.GetType().GetField(fieldName, bindings);</span><br><span class="line">    if (field != null)&#123;</span><br><span class="line">        field.SetValue(obj, value);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    var property = obj.GetType().GetProperty(fieldName, bindings);</span><br><span class="line">    if (property != null)&#123;</span><br><span class="line">        property.SetValue(obj, value, null);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (includeAllBases)</span><br><span class="line">        foreach (var type in GetBaseClassesAndInterfaces(obj.GetType()))&#123;</span><br><span class="line">            field = type.GetField(fieldName, bindings);</span><br><span class="line">            if (field != null)&#123;</span><br><span class="line">                field.SetValue(obj, value);</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            property = type.GetProperty(fieldName, bindings);</span><br><span class="line">            if (property != null)&#123;</span><br><span class="line">                property.SetValue(obj, value, null);</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static IEnumerable&lt;Type&gt; GetBaseClassesAndInterfaces(this Type type, bool includeSelf = false)&#123;</span><br><span class="line">    var allTypes = new List&lt;Type&gt;();</span><br><span class="line"></span><br><span class="line">    if (includeSelf) allTypes.Add(type);</span><br><span class="line"></span><br><span class="line">    if (type.BaseType == typeof(object))</span><br><span class="line">        allTypes.AddRange(type.GetInterfaces());</span><br><span class="line">    else</span><br><span class="line">        allTypes.AddRange(</span><br><span class="line">            Enumerable</span><br><span class="line">                .Repeat(type.BaseType, 1)</span><br><span class="line">                .Concat(type.GetInterfaces())</span><br><span class="line">                .Concat(type.BaseType.GetBaseClassesAndInterfaces())</span><br><span class="line">                .Distinct());</span><br><span class="line">    //I found this on stackoverflow</span><br><span class="line"></span><br><span class="line">    return allTypes;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+        
+    
+        
+            
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/06/17/unity-monitor-property/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -386,12 +538,24 @@
                 
               
 
-              <time title="创建时间：2019-06-17 16:28:31 / 修改时间：19:42:16" itemprop="dateCreated datePublished" datetime="2019-06-17T16:28:31+08:00">2019-06-17</time>
+              <time title="创建时间：2019-06-17 16:28:31" itemprop="dateCreated datePublished" datetime="2019-06-17T16:28:31+08:00">2019-06-17</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-29 23:15:52" itemprop="dateModified" datetime="2019-06-29T23:15:52+08:00">2019-06-29</time>
               
             
           </span>
@@ -427,15 +591,11 @@
       
         
           
-            <p>I was working on a progress bar or something like that to monitor a value.</p>
-<p>The problem is how I can monitor the value neatly.since I want it to be commonly used. The first idea come to my head is to make a reflection system to catch the value by add a reference to the variable .</p>
-<p>but it’s strange anyway .so I used a string to determine which feature to be monitored.</p>
-<p>first there are target and a property name.</p>
-<p>and then we have a class.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class ProgressListener : MonoBehaviour&#123;</span><br><span class="line">    [HideInInspector]</span><br><span class="line">    public float progressListened;</span><br><span class="line">    [HideInInspector]</span><br><span class="line">    public string progressName =&quot;unidentified&quot;;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    public ScriptableObject target;</span><br><span class="line">    private Image _image;</span><br><span class="line">    private bool _isTargetNotNull;</span><br><span class="line">    private void Awake()&#123;</span><br><span class="line">        _isTargetNotNull = target != null;</span><br><span class="line">        _image = this.GetComponent&lt;Image&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private float GetValue()&#123;</span><br><span class="line">        if (_isTargetNotNull)&#123;</span><br><span class="line">            Type targetType = target.GetType();</span><br><span class="line">            var propertyInfo = targetType.GetProperty(progressName);</span><br><span class="line">            if (propertyInfo != null) return (float) propertyInfo.GetValue(target);</span><br><span class="line">        &#125;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    void Update()&#123;</span><br><span class="line">        progressListened = GetValue();</span><br><span class="line">        _image.fillAmount = progressListened;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>尝试制作了一个监听任意Object属性的方片条.主要思路就是通过枚举该对象的属性,显示在inspector上.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class ProgressListener : MonoBehaviour&#123;</span><br><span class="line">    [HideInInspector]</span><br><span class="line">    public float progressListened;</span><br><span class="line">    [HideInInspector]</span><br><span class="line">    public string progressName =&quot;unidentified&quot;;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    public Object target;</span><br><span class="line">    private Image _image;</span><br><span class="line">    private bool _isTargetNotNull;</span><br><span class="line">    private void Awake()&#123;</span><br><span class="line">        _isTargetNotNull = target != null;</span><br><span class="line">        _image = this.GetComponent&lt;Image&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private float GetValue()&#123;</span><br><span class="line">        if (_isTargetNotNull)&#123;</span><br><span class="line">            Type targetType = target.GetType();</span><br><span class="line">            var propertyInfo = targetType.GetProperty(progressName);</span><br><span class="line">            if (propertyInfo != null) return (float) propertyInfo.GetValue(target);</span><br><span class="line">        &#125;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    void Update()&#123;</span><br><span class="line">        progressListened = GetValue();</span><br><span class="line">        _image.fillAmount = progressListened;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>and to make it accessible from inspector.we iterator the scriptobject’s member and give a popup list to user.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class ProgressListenerDrawer : Editor&#123;</span><br><span class="line">    private SerializedProperty _serializedTarget;</span><br><span class="line">    public string[] targetFeatureNames;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private void GetFeatureNames()&#123;</span><br><span class="line">        var serializedTargetValues= serializedObject.FindProperty(&quot;target&quot;).objectReferenceValue;</span><br><span class="line">        var targetFeatureNamesList = new List&lt;string&gt;();</span><br><span class="line">        foreach (var variable in serializedTargetValues.GetType().GetProperties())&#123;</span><br><span class="line">            if(variable.PropertyType==typeof(float))</span><br><span class="line">                targetFeatureNamesList.Add(variable.Name);</span><br><span class="line">        &#125;</span><br><span class="line">        targetFeatureNames = targetFeatureNamesList.ToArray();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    void OnEnable()&#123;</span><br><span class="line">        _serializedTarget = serializedObject.FindProperty(&quot;target&quot;);</span><br><span class="line">        GetFeatureNames();</span><br><span class="line">        var foundProperty= serializedObject.FindProperty(&quot;progressName&quot;);</span><br><span class="line">        index = Array.IndexOf(targetFeatureNames,foundProperty.stringValue);</span><br><span class="line">    &#125;</span><br><span class="line">    private int index;</span><br><span class="line">    public override void OnInspectorGUI()&#123;</span><br><span class="line">        base.OnInspectorGUI();</span><br><span class="line">        index = EditorGUILayout.Popup(</span><br><span class="line">            &quot;Feature:&quot;,</span><br><span class="line">            index,</span><br><span class="line">            targetFeatureNames);</span><br><span class="line">        var foundProperty= serializedObject.FindProperty(&quot;progressName&quot;);</span><br><span class="line">        foundProperty.stringValue = (targetFeatureNames[index]);</span><br><span class="line">        foundProperty.serializedObject.ApplyModifiedProperties();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>It’s very convenient anway</p>
+<p>很方便.</p>
 
           
         
@@ -539,12 +699,24 @@
                 
               
 
-              <time title="创建时间：2019-05-27 23:13:33 / 修改时间：23:55:33" itemprop="dateCreated datePublished" datetime="2019-05-27T23:13:33+08:00">2019-05-27</time>
+              <time title="创建时间：2019-05-27 23:13:33" itemprop="dateCreated datePublished" datetime="2019-05-27T23:13:33+08:00">2019-05-27</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-29 23:56:25" itemprop="dateModified" datetime="2019-06-29T23:56:25+08:00">2019-06-29</time>
               
             
           </span>
@@ -1498,195 +1670,6 @@
     
         
     
-        
-            
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://taoria.github.io/2019/02/14/waiting/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="taoria">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="只是另一个博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/14/waiting/" class="post-title-link" itemprop="url">游戏中的数学(1)</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-02-14 23:53:26" itemprop="dateCreated datePublished" datetime="2019-02-14T23:53:26+08:00">2019-02-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-17 02:15:07" itemprop="dateModified" datetime="2019-05-17T02:15:07+08:00">2019-05-17</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/图形学/" itemprop="url" rel="index"><span itemprop="name">图形学</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="线性变换"><a href="#线性变换" class="headerlink" title="线性变换"></a>线性变换</h1><p>如果有一个函数 $f(v)$ 有且具有</p>
-<blockquote>
-<p>$f(v) = f(x,y,z) = (x’,y’,z’)$</p>
-</blockquote>
-<p>且</p>
-<blockquote>
-<p>$f(v+u) = f(v) + f(u)$<br>$f(kv) = kf(v)$</p>
-</blockquote>
-<p>则称 $f(v)$ 为线性变换.</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/14/waiting/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-        
-    
   </section>
 
   
@@ -1736,7 +1719,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
